@@ -10,10 +10,12 @@ export default function Style(props) {
     const breakpoint = props.pathway.breakpoint
     const pseudo = props.pathway.pseudo
 
-    const goToPanel = style => {
+    const goToPanel = (style, closeDialogue = true) => {
 
         // Close the dialogue
-        props.setVisibility(false)
+        if ( closeDialogue ) {
+            props.setVisibility(false);
+        }
 
         // Switch to correct selector
 
@@ -243,36 +245,36 @@ export default function Style(props) {
         }
     }
 
-    const removeStyle = () => {
+    const removeStyle = styleName => {
 
         if ( selector.type == 'class' ) {
             
-            const pseudoName = pseudo.name == 'default' ? 'original' : pseudo.name
+            const pseudoName = pseudo.name == 'default' ? 'original' : pseudo.name;
 
             if ( breakpoint.type == 'screenWidth' ) {
-                delete $scope.iframeScope.classes[selector.name][pseudoName][props.styleName]
+                delete $scope.iframeScope.classes[selector.name][pseudoName][props.styleName];
             }
 
             else {
-                delete $scope.iframeScope.classes[selector.name].media[breakpoint.name][pseudoName][props.styleName]
+                delete $scope.iframeScope.classes[selector.name].media[breakpoint.name][pseudoName][props.styleName];
             }
         }
 
         else if ( selector.type == 'id' ) {
 
             if ( breakpoint.type == 'screenWidth' ) {
-                const pseudoName = pseudo.name == 'default' ? 'id' : pseudo.name
-                delete $scope.iframeScope.component.options[$scope.iframeScope.component.active.id][pseudoName][props.styleName]
+                const pseudoName = pseudo.name == 'default' ? 'id' : pseudo.name;
+                delete $scope.iframeScope.component.options[$scope.iframeScope.component.active.id][pseudoName][props.styleName];
                 
                 if ( pseudoName == 'id' ) {
-                    delete $scope.iframeScope.component.options[$scope.iframeScope.component.active.id]['original'][props.styleName]
-                    delete $scope.iframeScope.component.options[$scope.iframeScope.component.active.id]['model'][props.styleName]
+                    delete $scope.iframeScope.component.options[$scope.iframeScope.component.active.id]['original'][props.styleName];
+                    delete $scope.iframeScope.component.options[$scope.iframeScope.component.active.id]['model'][props.styleName];
                 }
             }
             
             else {
-                const pseudoName = pseudo.name == 'default' ? 'original' : pseudo.name
-                delete $scope.iframeScope.component.options[$scope.iframeScope.component.active.id].media[breakpoint.name][pseudoName][props.styleName]
+                const pseudoName = pseudo.name == 'default' ? 'original' : pseudo.name;
+                delete $scope.iframeScope.component.options[$scope.iframeScope.component.active.id].media[breakpoint.name][pseudoName][props.styleName];
             }
         }
 
@@ -288,16 +290,19 @@ export default function Style(props) {
         $scope.iframeScope.outputCSSOptions();
         $scope.iframeScope.outputPageSettingsCSS();
 
+        // Need to swap because Oxygen apparently needs it
+        goToPanel(styleName, false);
+
         /**
          * The following functions are derived from most input actions
          */
-        $scope.iframeScope.setOption($scope.iframeScope.component.active.id, $scope.iframeScope.component.active.name, props.styleName)
-        $scope.iframeScope.checkResizeBoxOptions(props.styleName)
+        $scope.iframeScope.setOption($scope.iframeScope.component.active.id, $scope.iframeScope.component.active.name, props.styleName);
+        $scope.iframeScope.checkResizeBoxOptions(props.styleName);
 
-        setStatus(false)
+        setStatus(false);
     }
 
-    const restoreStyle = () => {
+    const restoreStyle = styleName => {
 
         if ( selector.type == 'class' ) {
             
@@ -342,6 +347,9 @@ export default function Style(props) {
         $scope.iframeScope.outputCSSOptions();
         $scope.iframeScope.outputPageSettingsCSS();
 
+        // Need to swap because Oxygen apparently needs it
+        goToPanel(styleName, false);
+
         /**
          * The following functions are derived from most input actions
          */
@@ -359,8 +367,8 @@ export default function Style(props) {
                 <span onClick={() => goToPanel(props.styleName)}>{props.styleName}:</span>&nbsp;
                 <span>{typeof props.styleValue != 'object' ? props.styleValue : 'object'}</span>
             </div>
-            {isAlive ? <i className='sf-state-style__trash fa fa-trash' onClick={removeStyle}></i> : null}
-            {!isAlive ? <i className='sf-state-style__restore fa fa-arrow-up' onClick={restoreStyle}></i> : null}
+            {isAlive ? <i className='sf-state-style__trash fa fa-trash' onClick={() => removeStyle(props.styleName)}></i> : null}
+            {!isAlive ? <i className='sf-state-style__restore fa fa-arrow-up' onClick={() => restoreStyle(props.styleName)}></i> : null}
         </div>
     )
 }
