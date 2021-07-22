@@ -10,7 +10,7 @@
  * Plugin Name:       EE Style Flow
  * Plugin URI:        https://editorenhancer.com
  * Description:       Take control of your style maintenance in Oxygen Builder.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Max Zimmer
@@ -47,7 +47,7 @@ if ( ! function_exists( 'EditorEnhancer_Initializer' ) ) {
 			'Website' => 'http://editorenhancer.com',		// Use HTTP protocol
 			'Name'    => 'Style Flow',			// Use the EXACT title of your EDD product
 			'ID'      => 7269,						// Your EDD product's Product ID
-			'Version' => '1.0.0'					// Your EDD product's version number; increment this value every time you release an update
+			'Version' => '1.0.1'					// Your EDD product's version number; increment this value every time you release an update
 		];
 	}
 

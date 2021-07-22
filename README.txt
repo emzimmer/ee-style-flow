@@ -28,5 +28,10 @@ Valid license key should be entered for the plugin to function and to receive au
 
 == Changelog ==
 
+= 1.0.1 (22 July, 2021) =
+
+* Bug Fix: Minor issue where style could not be removed if also currently selected.
+
 = 1.0.0 =
+
 * Initial Release
